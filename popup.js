@@ -739,19 +739,20 @@ function updateMonthView() {
                     <div style="position:relative; height:32px; width:100%;">
 
                         <!-- The Visual Bar -->
-                        <div style="position:absolute; left:${leftPct}%; width:${widthPct}%; height:100%; background:${bg}; border-radius:2px; display:flex; align-items:center; padding:0 8px; box-sizing:border-box; justify-content:space-between;">
+                        <!-- The Visual Bar -->
+                        <div style="position:absolute; left:${leftPct}%; width:${widthPct}%; height:100%; background:${bg}; border-radius:2px; display:flex; align-items:center; justify-content:center; box-sizing:border-box;">
 
                             <!-- Highlight Overlay -->
                             ${w.secs > 0 ? `<div style="position:absolute; top:0; left:0; height:100%; width:100%; background:rgba(205, 220, 57, 0.15);"></div>` : ''}
 
                             <!-- Start Date -->
-                            <span style="z-index:1; font-size:12px; color:#aaa; visibility:${validStart.getTime() === w.start.getTime() ? 'visible' : 'hidden'}">${validStart.getDate()}</span>
+                            <span style="position:absolute; left:6px; z-index:2; font-size:12px; color:#aaa; visibility:${validStart.getTime() === w.start.getTime() ? 'visible' : 'hidden'}">${validStart.getDate()}</span>
 
                             <!-- Duration -->
                             <span style="z-index:1; font-size:12px; color:#e0e0e0; font-family:monospace; font-weight:bold;">${durStr}</span>
 
                             <!-- End Date -->
-                            <span style="z-index:1; font-size:12px; color:#aaa; visibility:${(validEnd.getTime() === w.end.getTime() && validStart.getDate() !== validEnd.getDate()) ? 'visible' : 'hidden'}">${validEnd.getDate()}</span>
+                            <span style="position:absolute; right:6px; z-index:2; font-size:12px; color:#aaa; visibility:${(validEnd.getTime() === w.end.getTime() && validStart.getDate() !== validEnd.getDate()) ? 'visible' : 'hidden'}">${validEnd.getDate()}</span>
                         </div>
 
                     </div>
