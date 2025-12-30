@@ -321,13 +321,34 @@ if (document.getElementById('file-import')) {
 
 // Day View
 function updateDayView() {
-    chrome.storage.local.get("history", (res) => {
+    chrome.storage.local.get(["history", "timer"], (res) => {
         const history = res.history || [];
         const targetDate = new Date();
         targetDate.setDate(targetDate.getDate() + viewState.dayOffset);
         const targetStr = targetDate.toDateString();
 
         const todaysSessions = history.filter(h => new Date(h.start).toDateString() === targetStr);
+
+        // Inject Active Session if match
+        if (res.timer && res.timer.running && (res.timer.mode === 'work' || (res.timer.mode_type === 'focused' && res.timer.mode === 'work'))) {
+            const t = res.timer;
+            const now = Date.now();
+            // Determine start time: t.startTime. 
+            // If Focused: startTime is actual start. 
+            // If Normal: startTime might be null if reloaded? No, stored. 
+            if (t.startTime) {
+                const activeDate = new Date(t.startTime);
+                if (activeDate.toDateString() === targetStr) {
+                    todaysSessions.push({
+                        start: t.startTime,
+                        end: now,
+                        duration: Math.floor((now - t.startTime) / 1000),
+                        type: 'work',
+                        status: 'running'
+                    });
+                }
+            }
+        }
 
         const dateHeader = targetDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
@@ -459,7 +480,7 @@ function updateWeekView() {
     const container = document.getElementById('week-chart');
     if (!container) return;
 
-    chrome.storage.local.get("history", (res) => {
+    chrome.storage.local.get(["history", "timer"], (res) => {
         const history = res.history || [];
         const now = new Date();
         now.setDate(now.getDate() + (viewState.weekOffset * 7));
@@ -484,6 +505,23 @@ function updateWeekView() {
             const d = new Date(h.start);
             return d >= startOfWeek && d < new Date(endOfWeek.getTime() + 86400000);
         });
+
+        // Inject Active Session
+        if (res.timer && res.timer.running && res.timer.mode === 'work') {
+            const t = res.timer;
+            if (t.startTime) {
+                const d = new Date(t.startTime);
+                if (d >= startOfWeek && d < new Date(endOfWeek.getTime() + 86400000)) {
+                    weekHistory.push({
+                        start: t.startTime,
+                        end: Date.now(),
+                        duration: Math.floor((Date.now() - t.startTime) / 1000),
+                        type: 'work',
+                        status: 'running'
+                    });
+                }
+            }
+        }
 
         // Weekly Totals
         const totalSessions = weekHistory.filter(h => h.type === 'work');
@@ -609,7 +647,7 @@ function updateMonthView() {
     const container = document.getElementById('tab-month');
     if (!container) return;
 
-    chrome.storage.local.get("history", (res) => {
+    chrome.storage.local.get(["history", "timer"], (res) => {
         const history = res.history || [];
         const now = new Date();
         now.setDate(1); // Avoid overflow (e.g. Jan 31 -> Feb 28)
@@ -623,6 +661,23 @@ function updateMonthView() {
             const d = new Date(h.start);
             return d.getFullYear() === year && d.getMonth() === month;
         });
+
+        // Inject Active Session
+        if (res.timer && res.timer.running && res.timer.mode === 'work') {
+            const t = res.timer;
+            if (t.startTime) {
+                const d = new Date(t.startTime);
+                if (d.getFullYear() === year && d.getMonth() === month) {
+                    monthHistory.push({
+                        start: t.startTime,
+                        end: Date.now(),
+                        duration: Math.floor((Date.now() - t.startTime) / 1000),
+                        type: 'work',
+                        status: 'running'
+                    });
+                }
+            }
+        }
 
         // Month Totals
         const totalSessions = monthHistory.filter(h => h.type === 'work');
