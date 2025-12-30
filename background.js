@@ -186,13 +186,25 @@ function finishSegment(status = "completed") {
             duration: nextDuration
         };
 
-        if (status === "skipped") {
+        if (status === "skipped" || status === "completed") {
             nextTimer.running = true;
             nextTimer.startTime = now;
-            nextTimer.targetTime = now + nextDuration;
+            // Determine duration based on new mode? (Already set in nextDuration)
+            // Recalculate target
+            nextTimer.targetTime = now + nextDuration; // Using the nextDuration calculated above
+
+            // Create Alarm even if completed (Auto-cycle)
             chrome.alarms.create("timer_end", { when: nextTimer.targetTime });
+
+            // Pre-end Warning (only for normal mode technically, but safe to check settings)
+            const deltaMins = settings.preEndDelta || 1;
+            const warningTime = nextTimer.targetTime - (deltaMins * 60 * 1000);
+            if (warningTime > now) {
+                chrome.alarms.create("pre_end_warning", { when: warningTime });
+            }
         } else {
             chrome.alarms.clear("timer_end");
+            chrome.alarms.clear("pre_end_warning");
         }
 
         chrome.storage.local.set({
