@@ -612,6 +612,7 @@ function updateMonthView() {
     chrome.storage.local.get("history", (res) => {
         const history = res.history || [];
         const now = new Date();
+        now.setDate(1); // Avoid overflow (e.g. Jan 31 -> Feb 28)
         now.setMonth(now.getMonth() + viewState.monthOffset);
 
         const year = now.getFullYear();
@@ -744,14 +745,13 @@ function updateMonthView() {
                             ${w.secs > 0 ? `<div style="position:absolute; top:0; left:0; height:100%; width:100%; background:rgba(205, 220, 57, 0.15);"></div>` : ''}
 
                             <!-- Start Date -->
-                            <span style="z-index:1; font-size:12px; color:#aaa;">${validStart.getDate()}</span>
+                            <span style="z-index:1; font-size:12px; color:#aaa; visibility:${validStart.getTime() === w.start.getTime() ? 'visible' : 'hidden'}">${validStart.getDate()}</span>
 
                             <!-- Duration -->
                             <span style="z-index:1; font-size:12px; color:#e0e0e0; font-family:monospace; font-weight:bold;">${durStr}</span>
 
                             <!-- End Date -->
-                            <span style="z-index:1; font-size:12px; color:#aaa; visibility:${validStart.getDate() !== validEnd.getDate() ? 'visible' : 'hidden'}">${validEnd.getDate()}</span>
-
+                            <span style="z-index:1; font-size:12px; color:#aaa; visibility:${(validEnd.getTime() === w.end.getTime() && validStart.getDate() !== validEnd.getDate()) ? 'visible' : 'hidden'}">${validEnd.getDate()}</span>
                         </div>
 
                     </div>
