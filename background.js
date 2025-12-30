@@ -2,7 +2,7 @@
 
 // Constants
 const DEFAULTS = {
-    settings: { work: 25, short: 5, long: 15 },
+    settings: { work: 25, short: 5, long: 15, preEndDelta: 1 },
     timer: {
         mode: "work", // work, short_break, long_break
         mode_type: "normal", // normal, focused
@@ -35,9 +35,33 @@ chrome.runtime.onInstalled.addListener(() => {
 // Alarm Listener (Tick)
 chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === "timer_end") {
+        playSound('play_chime');
+        playSound('stop_clock');
         finishSegment("completed");
+    } else if (alarm.name === "pre_end_warning") {
+        playSound('play_pre_end');
     }
 });
+
+// Audio & Offscreen Helpers
+const OFFSCREEN_PATH = 'offscreen.html';
+
+async function ensureOffscreen() {
+    const existing = await chrome.offscreen.hasDocument();
+    if (!existing) {
+        await chrome.offscreen.createDocument({
+            url: OFFSCREEN_PATH,
+            reasons: ['AUDIO_PLAYBACK'],
+            justification: 'Play notification sounds for timer events'
+        });
+    }
+}
+
+function playSound(action) {
+    ensureOffscreen().then(() => {
+        chrome.runtime.sendMessage({ action: action }).catch(() => { });
+    });
+}
 
 function finishSegment(status = "completed") {
     chrome.storage.local.get(["timer", "settings", "history"], (data) => {
@@ -92,6 +116,7 @@ function finishSegment(status = "completed") {
                     targetTime: null,
                     duration: 0
                 };
+                playSound('stop_clock');
                 chrome.storage.local.set({ timer: defaults, history: history });
                 return;
             } else {
@@ -131,6 +156,7 @@ function finishSegment(status = "completed") {
                 targetTime: null,
                 duration: settings.work * 60 * 1000
             };
+            playSound('stop_clock');
             chrome.storage.local.set({ timer: defaults, history: history });
             return;
         }
@@ -208,19 +234,39 @@ function setModeType(type) {
 }
 
 function startTimer() {
-    chrome.storage.local.get("timer", (data) => {
+    chrome.storage.local.get(["timer", "settings"], (data) => {
         const t = data.timer;
+        const s = data.settings || DEFAULTS.settings;
         const now = Date.now();
 
         t.running = true;
         t.startTime = now;
 
+        // Audio: Clock Loop (First Work Session only, until stop)
+        // Check if consistent with "first work session" logic: count implies sequence.
+        // User request: "only play once at the start of first work session until stop is clicked"
+        // This implies if we pause/resume or move to break, it might stop?
+        // User said "until stop is clicked (or chrome closed)".
+        // So breaks shouldn't stop it? "This is for both, normal and focused mode."
+        // If it's for both, and continuous, then it starts on Work #1 and loops forever until Stop button?
+        // Let's assume Start triggers it if not running.
+        if (t.mode === 'work' && t.pomodoro_count === 0) {
+            playSound('play_clock');
+        }
+
         if (t.mode_type === 'focused') {
-            t.targetTime = null; // No alarm for focused mode
+            t.targetTime = null;
         } else {
             const target = now + t.duration;
             t.targetTime = target;
             chrome.alarms.create("timer_end", { when: target });
+
+            // Pre-end Warning Alarm
+            const deltaMins = s.preEndDelta || 1;
+            const warningTime = target - (deltaMins * 60 * 1000);
+            if (warningTime > now) {
+                chrome.alarms.create("pre_end_warning", { when: warningTime });
+            }
         }
 
         chrome.storage.local.set({ timer: t });
@@ -228,6 +274,8 @@ function startTimer() {
 }
 
 function stopTimer() {
+    playSound('stop_clock');
+    chrome.alarms.clear("pre_end_warning");
     finishSegment("interrupted");
 }
 

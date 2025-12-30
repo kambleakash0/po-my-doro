@@ -29,6 +29,7 @@ const els = {
     inpWork: document.querySelector('#sets-work'),
     inpShort: document.querySelector('#sets-short'),
     inpLong: document.querySelector('#sets-long'),
+    inpPreEnd: document.querySelector('#sets-pre-end'),
     divDurations: document.querySelector('#tab-settings h3'), // Helper to hide
     btnSave: document.querySelector('#btn-save'),
     // Day Recap
@@ -199,11 +200,13 @@ function getStatusTag(status) {
 const inpWork = document.getElementById('sets-work');
 const inpShort = document.getElementById('sets-short');
 const inpLong = document.getElementById('sets-long');
+const inpPreEnd = document.getElementById('sets-pre-end');
 
 function loadSettings() {
     chrome.storage.local.get(["settings", "timer"], (res) => {
-        const s = res.settings || { work: 25, short: 5, long: 15 };
+        const s = res.settings || { work: 25, short: 5, long: 15, preEndDelta: 1 };
         els.inpWork.value = s.work;
+        if (els.inpPreEnd) els.inpPreEnd.value = s.preEndDelta || 1;
         els.inpShort.value = s.short;
         els.inpLong.value = s.long;
 
@@ -225,7 +228,8 @@ if (document.getElementById('btn-save')) {
         const newSettings = {
             work: parseInt(inpWork.value) || 25,
             short: parseInt(inpShort.value) || 5,
-            long: parseInt(inpLong.value) || 15
+            long: parseInt(inpLong.value) || 15,
+            preEndDelta: parseInt(inpPreEnd.value) || 1
         };
         chrome.storage.local.set({ settings: newSettings }, () => {
             // Reset timer to apply?
