@@ -45,15 +45,22 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 
 // Audio & Offscreen Helpers
 const OFFSCREEN_PATH = 'offscreen.html';
+let creatingOffscreen;
 
 async function ensureOffscreen() {
     const existing = await chrome.offscreen.hasDocument();
-    if (!existing) {
-        await chrome.offscreen.createDocument({
+    if (existing) return;
+
+    if (creatingOffscreen) {
+        await creatingOffscreen;
+    } else {
+        creatingOffscreen = chrome.offscreen.createDocument({
             url: OFFSCREEN_PATH,
             reasons: ['AUDIO_PLAYBACK'],
             justification: 'Play notification sounds for timer events'
         });
+        await creatingOffscreen;
+        creatingOffscreen = null;
     }
 }
 
@@ -65,7 +72,8 @@ function playSound(action) {
 
 function finishSegment(status = "completed") {
     chrome.storage.local.get(["timer", "settings", "history"], (data) => {
-        const { timer, settings, history } = data;
+        const { timer, history } = data;
+        const settings = data.settings || DEFAULTS.settings;
         const now = Date.now();
 
         let durationSecs = 0;
