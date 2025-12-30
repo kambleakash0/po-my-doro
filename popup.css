@@ -1,0 +1,261 @@
+body {
+    width: 380px;
+    height: 500px;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.container {
+    background: #1e1e1e;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    background: #000;
+}
+
+.tab-btn {
+    flex: 1;
+    border: none;
+    background: #2c2c2c;
+    color: #aaa;
+    padding: 10px 5px;
+    cursor: pointer;
+    font-size: 13px;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-btn.active {
+    border-bottom: 3px solid #e64a19;
+    font-weight: bold;
+    background: #1e1e1e;
+    color: #fff;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.tab-content {
+    display: none;
+    height: 100%;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Clock SVG */
+.clock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.clock-svg {
+    width: 220px;
+    height: 220px;
+}
+
+.bg-ring {
+    fill: none;
+    stroke: #333;
+    /* Darker track */
+    stroke-width: 15;
+}
+
+.progress-ring {
+    fill: none;
+    stroke: #e64a19;
+    stroke-width: 15;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    stroke-dasharray: 753.98;
+    /* 2 * pi * 120 */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s;
+    /* Smooth 1s transition */
+}
+
+.timer-text {
+    font-size: 48px;
+    font-weight: bold;
+    fill: #ffffff;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.mode-text {
+    font-size: 16px;
+    fill: #aaa;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    background: #444;
+    color: #fff;
+    transition: all 0.2s;
+}
+
+button.primary {
+    background-color: #e64a19;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Recap */
+.recap-header {
+    text-align: center;
+    font-size: 18px;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.timeline {
+    border-top: 1px solid #333;
+    padding-top: 10px;
+}
+
+.timeline-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-left: 4px solid #555;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+/* Settings */
+.setting-row {
+    margin-bottom: 15px;
+}
+
+.setting-row label {
+    display: block;
+    margin-bottom: 5px;
+    color: #bbb;
+}
+
+.setting-row input {
+    width: 100%;
+    padding: 8px;
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.tag {
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin-left: 5px;
+    color: white;
+}
+
+.tag.skipped {
+    background: #fbc02d;
+    color: #333;
+}
+
+
+/* Mode Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #444;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #e64a19;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #e64a19;
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Pause/Resume buttons */
+#btn-pause {
+    background-color: #ffb74d;
+    /* Amber for pause */
+    color: #1e1e1e;
+}
+
+#btn-resume {
+    background-color: #e64a19;
+    /* Work color */
+}
