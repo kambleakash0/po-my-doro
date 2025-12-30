@@ -242,13 +242,27 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
 });
 
 function setModeType(type) {
-    chrome.storage.local.get("timer", (data) => {
+    chrome.storage.local.get(["timer", "settings"], (data) => {
         const t = data.timer;
+        const s = data.settings || DEFAULTS.settings;
+
         t.mode_type = type;
-        // Reset if switching? Yes, user interaction implies idle.
+        // Reset if switching
         t.running = false;
         t.mode = 'work';
         t.pomodoro_count = 0;
+
+        // Reset Duration based on Type
+        if (type === 'normal') {
+            t.duration = s.work * 60 * 1000;
+        } else {
+            t.duration = 0; // or irrelevant
+        }
+
+        // Cleanup
+        chrome.alarms.clearAll();
+        playSound('stop_clock');
+
         chrome.storage.local.set({ timer: t });
     });
 }
