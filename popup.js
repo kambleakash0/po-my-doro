@@ -752,7 +752,7 @@ function updateMonthView() {
                             <span style="z-index:1; font-size:12px; color:#e0e0e0; font-family:monospace; font-weight:bold;">${durStr}</span>
 
                             <!-- End Date -->
-                            <span style="position:absolute; right:6px; z-index:2; font-size:12px; color:#aaa; visibility:${(validEnd.getTime() === w.end.getTime() && validStart.getDate() !== validEnd.getDate()) ? 'visible' : 'hidden'}">${validEnd.getDate()}</span>
+                            <span style="position:absolute; right:6px; z-index:2; font-size:12px; color:#aaa; visibility:${validEnd.getTime() === w.end.getTime() ? 'visible' : 'hidden'}">${validEnd.getDate()}</span>
                         </div>
 
                     </div>
