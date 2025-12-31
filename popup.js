@@ -348,6 +348,7 @@ function updateDayView() {
                         end: now,
                         duration: Math.floor((now - t.startTime) / 1000),
                         type: 'work',
+                        mode_type: t.mode_type || 'normal',
                         status: 'running'
                     });
                 }
@@ -412,7 +413,7 @@ function updateDayView() {
             const ms = start - mid;
             const leftPct = (ms / 86400000) * 100;
             const widthPct = ((h.duration * 1000) / 86400000) * 100;
-            const color = '#e64a19'; // Work color
+            const color = '#43a047'; // Work color (Green)
 
             return `<div style="position:absolute; left:${leftPct}%; width:${Math.max(0.5, widthPct)}%; height:100%; background:${color};"></div>`;
         }).join('')}
@@ -438,21 +439,38 @@ function updateDayView() {
             const s = h.duration % 60;
             const durStr = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 
-            const dotColor = '#e64a19';
+            const dotColor = '#43a047';
+
+            // Mode Tag
+            let modeTag = '';
+            const mType = h.mode_type || 'normal'; // Default to normal if missing (legacy)
+            if (mType === 'focused') modeTag = '<span class="tag" style="background:#5c6bc0; color:#fff; padding:2px 4px; border-radius:2px; font-size:10px; margin-right:5px;">Focused</span>';
+            else modeTag = '<span class="tag" style="background:#26a69a; color:#fff; padding:2px 4px; border-radius:2px; font-size:10px; margin-right:5px;">Normal</span>';
+
+            // Status Tag
+            let statusTag = '';
+            if (h.status === 'running') {
+                statusTag = '<span style="font-size:11px; color:#cddc39; margin-top:4px; font-weight:bold;">ACTIVE</span>';
+            } else if (h.status === 'completed') {
+                if (mType === 'focused') statusTag = '<span style="font-size:11px; color:#aaa; margin-top:4px; font-weight:normal;">Paused</span>';
+                else statusTag = '<span style="font-size:11px; color:#66bb6a; margin-top:4px; font-weight:bold;">Completed</span>';
+            } else {
+                const statusColor = h.status === 'skipped' ? '#ffb74d' : '#ef5350';
+                statusTag = `<div style="font-size:11px; color:${statusColor}; margin-top:4px; font-weight:bold;">${h.status.toUpperCase()}</div>`;
+            }
 
             html += `
                 <div style="position:relative; margin-bottom:25px; padding-left:15px;">
                     <!-- Dot -->
                     <div style="position:absolute; left:-20px; top:0; width:9px; height:9px; background:${dotColor}; border-radius:50%; border:2px solid #1e1e1e;"></div>
                     
-                    <div style="font-size:13px; color:#888;">${startStr}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div style="font-size:13px; color:#888;">${startStr} - ${endStr}</div>
+                        <div>${modeTag}</div>
+                    </div>
                     <div style="font-size:20px; font-weight:normal; color:#fff; margin:2px 0; font-family:monospace;">${durStr}<span style="font-size:12px; color:#555;"></span></div>
-                    <div style="font-size:13px; color:#888;">${endStr}</div>
                     
-                    ${h.status !== 'completed' ? (() => {
-                    const statusColor = h.status === 'skipped' ? '#ffb74d' : '#ef5350';
-                    return `<div style="font-size:11px; color:${statusColor}; margin-top:4px; font-weight:bold;">${h.status.toUpperCase()}</div>`;
-                })() : ''}
+                    ${statusTag}
                 </div>
             `;
         });

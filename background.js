@@ -87,6 +87,7 @@ function finishSegment(status = "completed") {
             end: now,
             duration: durationSecs,
             type: timer.mode,
+            mode_type: timer.mode_type,
             status: status
         });
 
