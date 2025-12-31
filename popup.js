@@ -611,9 +611,10 @@ function updateWeekView() {
 
             let dayTimeStr = '';
             if (daySecs > 0) {
-                const m = Math.floor(daySecs / 60);
+                const h = Math.floor(daySecs / 3600);
+                const m = Math.floor((daySecs % 3600) / 60);
                 const s = daySecs % 60;
-                dayTimeStr = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                dayTimeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             }
 
             // Timeline Bars
