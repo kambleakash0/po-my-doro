@@ -826,11 +826,13 @@ function updateMonthView() {
                             <!-- Start Date -->
                             <span style="position:absolute; left:6px; z-index:2; font-size:12px; color:#aaa; visibility:${validStart.getTime() === w.start.getTime() ? 'visible' : 'hidden'}">${validStart.getDate()}</span>
 
-                            <!-- Duration -->
-                            <span style="z-index:1; font-size:12px; color:#e0e0e0; font-family:monospace; font-weight:bold;">${durStr}</span>
-
                             <!-- End Date -->
                             <span style="position:absolute; right:6px; z-index:2; font-size:12px; color:#aaa; visibility:${validEnd.getTime() === w.end.getTime() ? 'visible' : 'hidden'}">${validEnd.getDate()}</span>
+                        </div>
+
+                        <!-- Duration Centered in Row -->
+                        <div style="position:absolute; width:100%; height:100%; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:5;">
+                             <span style="font-size:12px; color:#e0e0e0; font-family:monospace; font-weight:bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8);">${durStr}</span>
                         </div>
 
                     </div>
