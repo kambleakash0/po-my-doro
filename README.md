@@ -1,57 +1,52 @@
-# Po-My-Doro 🍅
+<div align="center">
+  <img src="icons/icon128.png" width="128" alt="Po-My-Doro logo">
 
-A powerful, aesthetic, and privacy-focused Pomodoro timer extension for Chrome.
+# Po-My-Doro
 
-## Features ✨
+  *A powerful, aesthetic, and privacy-focused Pomodoro timer extension for Chrome, Edge, Brave, and other Chromium-based browsers.*
+  
+  [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+</div>
 
-### 1. Dual Timer Modes
+A modern browser extension designed to boost your productivity using the Pomodoro technique. It features multiple timer modes, local-first data storage, and rich analytics to help you focus.
 
-* **Normal Mode**: Classic Pomodoro technique. Work (25m), Short Break (5m), Long Break (15m).
-  * *Auto-Cycles*: Automatically transitions between Work and Break sessions.
-* **Focused Mode**: A stopwatch-style timer for deep work sessions where you don't want to be constrained by a clock.
-  * Tracks exact time spent.
-  * Shows "Paused" status in history if interrupted.
+## Features
 
-### 2. Audio Notifications 🔊
+- **Dual Timer Modes**
+  - **Normal Mode**: Classic Pomodoro technique (Work 25m, Short Break 5m, Long Break 15m) with automatic transitions.
+  - **Focused Mode**: Stopwatch-style timer for unconstrained deep work sessions. Tracks exact time spent.
+- **Audio Notifications**
+  - Subtle clock sounds, pre-end warnings, and completion chimes managed reliably via an offscreen document.
+- **Rich History & Analytics**
+  - Day, week, and month views. Visual timeline differentiating session types. Automatically categorizes by completed and paused states.
+- **Offline First & Private**
+  - All data is stored locally in `chrome.storage.local`. Supports JSON export/import for device migration without data loss.
 
-* **Start Sound**: Plays a subtle clock sound at the start of your first work session.
-* **Pre-end Warning**: A gentle chime plays *X* minutes before your session ends (Configurable default: 1 min).
-* **Completion Chime**: A distinct sound marks the exact end of a session.
-* *(Note: Audio uses an offscreen document to ensure reliability in background)*
+## Installation
 
-### 3. Rich History & Analytics 📊
-
-* **Day View**: Visual timeline of your day's work, differentiating between Normal (Green) and Focused (Blue/Indigo) sessions.
-* **Week / Month Views**: Aggregate stats to track consistency over time.
-* **Tags**: Automatically tags sessions as `[Normal]`, `[Focused]`, `[Completed]`, or `[Paused]`.
-
-### 4. Data Management 💾
-
-* **Offline First**: All data is stored locally in your browser (`chrome.storage.local`).
-* **Export/Import**: Backup your history to JSON or migrate between devices. Smart import merges data keeping your history intact.
-
-## Installation 🛠️
-
-Since this is a custom extension, install it via Developer Mode:
+As this is a custom extension, install it directly via Developer Mode in your Chromium-based browser.
 
 1. Clone or download this repository.
-2. Open Chrome and navigate to `chrome://extensions`.
-3. Enable **Developer Mode** (toggle in the top right corner).
+2. Open your browser and navigate to its extensions management page (e.g., `chrome://extensions`, `edge://extensions`, or `brave://extensions`).
+3. Enable **Developer Mode** (usually a toggle in the top right corner or bottom left menu).
 4. Click **Load unpacked**.
-5. Select the **root directory** of this repository (`po-my-doro`).
+5. Select the root directory of this repository (`po-my-doro`).
 
-## Usage 🚀
+## Usage
 
-1. Click the extension icon to open the popup.
-2. **Start**: Click Play to begin the timer.
-3. **Toggle Mode**: Use the switch below the timer to swap between "Normal" and "Focused".
-4. **Settings**: Click the generic 'Settings' tab to customize durations and audio preferences.
+1. Click the extension icon in your browser toolbar to open the popup.
+2. **Start Timer**: Click the Play button to begin tracking.
+3. **Toggle Mode**: Use the switch below the timer to swap between Normal and Focused modes.
+4. **Customize**: Access the Settings tab to adjust durations, pre-end warning times, and audio preferences.
 
-## Tech Stack 💻
+> [!TIP]  
+> The **Focused Mode** is perfect for tasks where you don't want to be interrupted by a strict break timer.
 
-* **Manifest V3**: Modern Chrome Extension architecture.
-* **Vanilla JS**: Lightweight, no heavy frameworks.
-* **Chrome APIs**: `storage`, `alarms`, `offscreen`, `runtime`.
+> [!NOTE]  
+> Use the export/import functionality in the settings to back up your history before moving to a new machine. The smart import feature safely merges your current data.
 
----
-*Stay focused, stay productive.*
+## Tech Stack
+
+- **Manifest V3**: Modern browser extension architecture (supported by Google Chrome and all Chromium-based browsers).
+- **Vanilla JS**: Lightweight implementation without heavy frameworks.
+- **Chrome APIs**: Uses `storage`, `alarms`, `offscreen`, and `runtime` APIs.
