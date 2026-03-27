@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "po-my-doro",
-    "version": "1.0",
+    "version": "1.0.0",
     "description": "A Pomodoro timer with a clean, circular interface.",
     "permissions": [
         "storage",
