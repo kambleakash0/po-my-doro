@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "po-my-doro",
     "version": "1.0.0",
-    "description": "A Pomodoro timer with a clean, circular interface.",
+    "description": "A privacy-focused Pomodoro timer with dual modes, audio cues, and rich analytics — all stored locally.",
     "permissions": [
         "storage",
         "alarms",
