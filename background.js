@@ -21,11 +21,11 @@ chrome.runtime.onInstalled.addListener(() => {
         if (!res.settings) chrome.storage.local.set({ settings: DEFAULTS.settings });
         if (!res.timer) chrome.storage.local.set({ timer: DEFAULTS.timer });
 
-        // History Pruning (90 days)
+        // History Pruning (365 days)
         let history = res.history || [];
-        const ninetyDaysAgo = Date.now() - (90 * 24 * 60 * 60 * 1000);
+        const retentionLimit = Date.now() - (365 * 24 * 60 * 60 * 1000);
         const originalLen = history.length;
-        history = history.filter(h => h.start > ninetyDaysAgo);
+        history = history.filter(h => h.start > retentionLimit);
 
         chrome.storage.local.set({ history: history });
         if (originalLen > history.length) console.log("Pruned old history.");
