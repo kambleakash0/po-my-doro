@@ -45,11 +45,11 @@ Coming soon.
 
 ### Local Development
 
-1. Clone or download this repository.
+1. Clone this repository, or download the latest zip from the [Releases](../../releases) page.
 2. Open your browser and navigate to its extensions management page (e.g., `chrome://extensions`, `edge://extensions`, or `brave://extensions`).
 3. Enable **Developer Mode** (usually a toggle in the top right corner or bottom left menu).
 4. Click **Load unpacked**.
-5. Select the root directory of this repository (`po-my-doro`).
+5. Select the repo directory (or the extracted zip folder).
 
 ## Usage
 
