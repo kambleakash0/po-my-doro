@@ -10,6 +10,20 @@
 
 A modern browser extension designed to boost your productivity using the Pomodoro technique. It features multiple timer modes, local-first data storage, and rich analytics to help you focus.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center"><strong>Timer</strong><br><br><img src="screenshots/timer.png" width="180"></td>
+    <td width="20"></td>
+    <td align="center"><strong>Day</strong><br><br><img src="screenshots/day.png" width="180"></td>
+    <td width="20"></td>
+    <td align="center"><strong>Week</strong><br><br><img src="screenshots/week.png" width="180"></td>
+    <td width="20"></td>
+    <td align="center"><strong>Month</strong><br><br><img src="screenshots/month.png" width="180"></td>
+  </tr>
+</table>
+
 ## Features
 
 - **Dual Timer Modes**
@@ -24,7 +38,12 @@ A modern browser extension designed to boost your productivity using the Pomodor
 
 ## Installation
 
-As this is a custom extension, install it directly via Developer Mode in your Chromium-based browser.
+### Chrome Web Store
+
+<!-- TODO: Add Chrome Web Store link after publishing -->
+Coming soon.
+
+### Local Development
 
 1. Clone or download this repository.
 2. Open your browser and navigate to its extensions management page (e.g., `chrome://extensions`, `edge://extensions`, or `brave://extensions`).
@@ -50,3 +69,15 @@ As this is a custom extension, install it directly via Developer Mode in your Ch
 - **Manifest V3**: Modern browser extension architecture (supported by Google Chrome and all Chromium-based browsers).
 - **Vanilla JS**: Lightweight implementation without heavy frameworks.
 - **Chrome APIs**: Uses `storage`, `alarms`, `offscreen`, and `runtime` APIs.
+
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Privacy
+
+Po-My-Doro does not collect, transmit, or share any user data. All data is stored locally on your device. See [PRIVACY.md](PRIVACY.md) for details.
+
+## License
+
+Licensed under the MIT License — see [LICENSE](LICENSE) for details.
