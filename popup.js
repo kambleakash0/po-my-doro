@@ -374,7 +374,8 @@ function updateDayView() {
                 <!-- Date -->
                 <!-- Date -->
                 <!-- Year/Date Header with Nav -->
-                <div style="height:60px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-bottom:10px;">
+                <div style="min-height:60px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-bottom:10px;">
+                    ${viewState.dayOffset !== 0 ? `<button id="btn-day-today" style="background:none; border:1px solid #555; color:#aaa; font-size:12px; cursor:pointer; padding:2px 8px; border-radius:4px; margin-bottom:5px;">Today</button>` : ''}
                     <div style="display:flex; align-items:center; gap:10px;">
                         <button id="btn-day-prev" style="background:none; border:none; color:#777; font-size:20px; cursor:pointer; padding:0 10px;">&lt;</button>
                         <div style="font-size:18px; color:#e0e0e0; min-width:140px; text-align:center;">${dateHeader}</div>
@@ -494,6 +495,13 @@ function updateDayView() {
             viewState.dayOffset++;
             updateDayView();
         });
+        const btnToday = document.getElementById('btn-day-today');
+        if (btnToday) {
+            btnToday.addEventListener('click', () => {
+                viewState.dayOffset = 0;
+                updateDayView();
+            });
+        }
     });
 }
 
@@ -571,7 +579,8 @@ function updateWeekView() {
                 <!-- Header -->
                 <!-- Header -->
                 <!-- Header -->
-                <div style="height:60px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-bottom:10px;">
+                <div style="min-height:60px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-bottom:10px;">
+                    ${viewState.weekOffset !== 0 ? `<button id="btn-week-today" style="background:none; border:1px solid #555; color:#aaa; font-size:12px; cursor:pointer; padding:2px 8px; border-radius:4px; margin-bottom:5px;">This Week</button>` : ''}
                     <div style="display:flex; align-items:center; gap:10px;">
                         <button id="btn-week-prev" style="background:none; border:none; color:#777; font-size:20px; cursor:pointer; padding:0 10px;">&lt;</button>
                         <div style="font-size:18px; color:#e0e0e0; margin-bottom:4px; text-align:center;">Week ${weekNo} <span style="color:#777; font-size:16px;">${now.getFullYear()}</span></div>
@@ -662,6 +671,13 @@ function updateWeekView() {
             viewState.weekOffset++;
             updateWeekView();
         });
+        const btnWeekToday = document.getElementById('btn-week-today');
+        if (btnWeekToday) {
+            btnWeekToday.addEventListener('click', () => {
+                viewState.weekOffset = 0;
+                updateWeekView();
+            });
+        }
     });
 }
 
@@ -753,7 +769,8 @@ function updateMonthView() {
                 <!-- Header -->
                 <!-- Header -->
                 <!-- Header -->
-                <div style="height:60px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-bottom:10px;">
+                <div style="min-height:60px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin-bottom:10px;">
+                    ${viewState.monthOffset !== 0 ? `<button id="btn-month-today" style="background:none; border:1px solid #555; color:#aaa; font-size:12px; cursor:pointer; padding:2px 8px; border-radius:4px; margin-bottom:5px;">This Month</button>` : ''}
                     <div style="display:flex; align-items:center; gap:10px;">
                         <button id="btn-month-prev" style="background:none; border:none; color:#777; font-size:20px; cursor:pointer; padding:0 10px;">&lt;</button>
                         <div style="font-size:18px; color:#e0e0e0; min-width:150px; text-align:center;">${now.toLocaleString('default', { month: 'long', year: 'numeric' })}</div>
@@ -856,6 +873,13 @@ function updateMonthView() {
             viewState.monthOffset++;
             updateMonthView();
         });
+        const btnMonthToday = document.getElementById('btn-month-today');
+        if (btnMonthToday) {
+            btnMonthToday.addEventListener('click', () => {
+                viewState.monthOffset = 0;
+                updateMonthView();
+            });
+        }
     });
 }
 
