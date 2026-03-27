@@ -155,6 +155,18 @@ function updateUI() {
 updateUI();
 setInterval(updateUI, 1000);
 
+// Info Button
+const btnInfo = document.getElementById('btn-info');
+if (btnInfo) {
+    btnInfo.addEventListener('click', () => {
+        if (chrome.runtime.openOptionsPage) {
+            chrome.runtime.openOptionsPage();
+        } else {
+            window.open(chrome.runtime.getURL('options.html'));
+        }
+    });
+}
+
 // Actions
 els.btnStart.addEventListener('click', () => {
     chrome.runtime.sendMessage({ action: "start_timer" });

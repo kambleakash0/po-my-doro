@@ -1,96 +1,194 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Tomato Cycle Settings</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Po-My-Doro | Options & Guide</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            padding: 40px;
-            background: #f0f0f0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #1e1e1e;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #fff;
+        }
+
+        .header p {
+            color: #aaa;
+            font-size: 18px;
+            margin-top: 10px;
         }
 
         .container {
-            background: white;
-            max-width: 500px;
-            margin: auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        h2 {
+        .card {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid #2c2c2c;
+        }
+
+        .card h2 {
             margin-top: 0;
-            color: #333;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .row {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 500;
-        }
-
-        input {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            border: 1px solid #ccc;
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
             border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+            vertical-align: middle;
         }
 
-        button {
-            background: #e64a19;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
+        .badge.normal {
+            background: #26a69a;
+            color: #fff;
         }
 
-        button:hover {
-            background: #d84315;
+        .badge.focused {
+            background: #5c6bc0;
+            color: #fff;
         }
 
-        .status {
-            margin-top: 10px;
-            color: green;
+        ul {
+            padding-left: 20px;
+            color: #bbb;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #fff;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
             font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.5s;
+            margin-top: 40px;
         }
 
-        .status.visible {
-            opacity: 1;
+        .icon {
+            font-size: 24px;
+            vertical-align: middle;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>🍅 Timer Settings</h2>
-        <div class="row">
-            <label>Work Duration (minutes)</label>
-            <input type="number" id="work" min="1">
+
+    <div class="header">
+        <div style="display:flex; justify-content:center; align-items:center; gap:15px;">
+            <img src="icons/icon128.png" width="48" height="48" alt="Po-My-Doro Icon"
+                style="border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.5);">
+            <h1>Po-My-Doro</h1>
         </div>
-        <div class="row">
-            <label>Short Break Duration (minutes)</label>
-            <input type="number" id="short" min="1">
-        </div>
-        <div class="row">
-            <label>Long Break Duration (minutes)</label>
-            <input type="number" id="long" min="1">
-        </div>
-        <button id="save">Save Settings</button>
-        <div id="status" class="status">Settings Saved!</div>
+        <p>Your Ultimate Privacy-Focused Productivity Companion</p>
     </div>
-    <script src="options.js"></script>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>Dual Timer Modes</h2>
+            <p>Po-My-Doro has two ways to track your time. You can flip between them using the toggle at the bottom of
+                the timer.</p>
+
+            <div style="margin-top:20px;">
+                <h3><span class="badge normal">Normal Mode</span> Classic Pomodoro</h3>
+                <p>The standard way to work. It cycles automatically between focus periods and breaks.</p>
+                <ul>
+                    <li><strong>Work Session (Default 25m):</strong> Put your head down and work.</li>
+                    <li><strong>Short Break (Default 5m):</strong> Take a quick breather.</li>
+                    <li><strong>Long Break (Default 15m):</strong> A longer rest after you finish 4 work sessions in a
+                        row.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top:30px;">
+                <h3><span class="badge focused">Focused Mode</span> Flow State Tracking</h3>
+                <p>Sometimes you just get in the zone and don't want a timer interrupting you. Focused Mode drops the
+                    countdown.</p>
+                <ul>
+                    <li>Acts as a regular stopwatch counting up.</li>
+                    <li>Keeps tracking until you actually click <strong>Stop</strong> or <strong>Pause</strong>.</li>
+                    <li>Great for deep reading, unrestricted coding, or when you just want to see how long a task takes.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Audio Cues & Notifications</h2>
+            <p>You don't need to keep checking the clock. Subtle sounds let you know what's happening:</p>
+            <ul>
+                <li><strong>Start Chime:</strong> A soft tick marks the beginning of your work block.</li>
+                <li><strong>Pre-End Warning:</strong> (Normal Mode Only) A gentle chime warns you when your session is
+                    almost over. You can change this timing in the popup settings.</li>
+                <li><strong>Completion Chime:</strong> A distinct sound lets you know the session is done.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Analytics & History</h2>
+            <p>Look back at how you spent your time. All your history stays securely on your own computer.</p>
+            <ul>
+                <li><strong>Day View:</strong> A visual timeline of your day. Green blocks are work sessions. <span
+                        class="badge normal">Normal</span> and <span class="badge focused">Focused</span> tags show
+                    exactly how you worked.</li>
+                <li><strong>Week & Month Views:</strong> See your total hours across longer periods to figure out your
+                    most productive days.</li>
+                <li><strong>Real-time Totals:</strong> If you have a timer running right now, it counts toward your
+                    daily totals in real-time.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Configuration & Data Management</h2>
+            <p>Your data belongs to you. Po-My-Doro saves everything straight to your browser—no cloud required.</p>
+            <ul>
+                <li><strong>In-Popup Settings:</strong> Click the settings icon in the top right of the popup to change
+                    your default durations and audio warnings.</li>
+                <li><strong>Export & Import:</strong> Back up your entire history to a JSON file, or move it to another
+                    computer. Click your profile icon in the popup to open Data Management.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        Po-My-Doro • Built for uncompromised focus.
+    </div>
+    </div>
+
 </body>
 
 </html>
