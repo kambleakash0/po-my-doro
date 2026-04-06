@@ -40,8 +40,7 @@ A modern browser extension designed to boost your productivity using the Pomodor
 
 ### Chrome Web Store
 
-<!-- TODO: Add Chrome Web Store link after publishing -->
-Coming soon.
+Install directly from the [Chrome Web Store](https://chromewebstore.google.com/detail/po-my-doro/ljkddbclemnciaflfkfojogajbalbjcc).
 
 ### Local Development
 
